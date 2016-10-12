@@ -253,7 +253,7 @@ public class DeviceControlActivity extends Activity {
             mDataQuaternionFloat.setText(stringBuilder.toString());
         }
         else if (type == GForceData.GESTURE) {
-            stringBuilder.append(gForceData.getGestureName());
+            stringBuilder.append(String.format("    %s", gForceData.getGestureName()));
             mDataGesture.setText(stringBuilder.toString());
         }
     }
