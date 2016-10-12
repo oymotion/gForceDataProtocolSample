@@ -61,6 +61,8 @@
             android:layout_height="wrap_content"
             android:text="@string/gesture"
             android:textSize="18sp"/>
+        <Space android:layout_width="5dp"
+            android:layout_height="wrap_content"/>
         <TextView android:id="@+id/data_gesture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
