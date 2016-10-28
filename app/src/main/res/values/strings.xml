@@ -37,4 +37,5 @@
     <string name="title_activity_sensor_plot_activity">sensor_plot_activity</string>
     <string name="gesture">Gesture:</string>
     <string name="quaternion_float">Quaternion (float):</string>
+    <string name="access_location_denied">permission.ACCESS_COARSE_LOCATION denied.</string>
 </resources>

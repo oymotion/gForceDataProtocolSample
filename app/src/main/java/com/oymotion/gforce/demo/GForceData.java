@@ -54,32 +54,70 @@ public class GForceData {
         mGesture = gesture;
     }
 
+    private static long mPackageCount = -1;
+    private static int mLastPackageID = -1;
+    private static long mTotallyLostPackageCount = 0;
+    private static long mPreviousTime;
+
     public int getType() {
         return mType;
     }
+
     public static GForceData build(byte[] data) {
-        // byte[0]  - type
-        // byte[1]  - length of the subsequent data byte[2:]
-        // byte[2:] - data
-        int type = (int)data[0];
+        // bytes[0][0:6] - type
+        // bytes[1]  - length of the subsequent data byte[2:]
+        // bytes[2:] - data
+        //      if (bytes[0][7] == 1)
+        //          bytes[2] - Package ID for checking integrity of packages sequence.
+        int type = (int)(data[0] & 0x7F);
+        int package_id_shift = (data[0] & 0x80) == 0x80 ? 1 : 0;
+        int payload_start_index = 2 + package_id_shift;
+        // Calculate FPS
+        long time = System.currentTimeMillis();
+        if (mPackageCount == -1) {
+            mPackageCount = 1;
+            mPreviousTime = time;
+        }
+        else {
+            ++mPackageCount;
+            if (time - mPreviousTime >= 1000) {
+                Log.i(TAG, String.format("FPS: %d", mPackageCount));
+                mPreviousTime = time;
+                mPackageCount = 0;
+            }
+        }
+        // check the lost package
+        if (package_id_shift == 1) {
+            byte package_id = data[2];
+            if (mLastPackageID != -1) {
+                int lostPackageCount = (int)package_id - mLastPackageID;
+                if (lostPackageCount > 1) {
+                    mTotallyLostPackageCount += lostPackageCount;
+                    Log.e(TAG, String.format("Lost packages: %d in the last second, totally %d ", lostPackageCount, mTotallyLostPackageCount));
+                }
+            }
+            mLastPackageID = package_id;
+        }
+
         if (type == QUATERNION_FLOAT) {
-            if (data[1] != 16) {
+            if (data[1] != 16 + package_id_shift) {
                 return null;
             }
             float[] q = new float[4];
 
-            for (int i = 2; i < 18; i += 4) {
-                byte[] bytes = Arrays.copyOfRange(data, i, i + 4);
-                q[(i-2)/4] = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getFloat();
+            for (int i = 0; i < 4; i++) {
+                int copy_index = payload_start_index + i * 4;
+                byte[] bytes = Arrays.copyOfRange(data,  copy_index , copy_index + 4);
+                q[i] = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getFloat();
             }
 
             return new GForceData(type, q);
         }
         else if (type == GESTURE) {
-            if (data[1] != 1) {
+            if (data[1] != 1 + package_id_shift) {
                 return null;
             }
-            int gesture = (int)data[2];
+            int gesture = (int)data[payload_start_index];
             if (gesture > GESTURE_MAX && gesture != GESTURE_UNKNOWN) {
                 Log.e(TAG, String.format("Illegal gesture value: %d", gesture));
                 return null;

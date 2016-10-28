@@ -6,8 +6,8 @@ android {
 
     defaultConfig {
         applicationId "com.oymotion.gforce.demo"
-        minSdkVersion 18
-        targetSdkVersion 23
+        minSdkVersion 21
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
      //   testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -42,4 +42,5 @@ dependencies {
     compile 'com.android.support:design:22.2.1'
     compile "com.android.support:cardview-v7:21.0.2"
     compile "com.github.movisens:SmartGattLib:1.7"
+    compile 'com.android.support:support-v13:25.0.0'
 }

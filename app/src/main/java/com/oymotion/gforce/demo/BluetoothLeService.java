@@ -218,8 +218,10 @@ public class LocalBinder extends Binder {
             Log.d(TAG, "Trying to use an existing mBluetoothGatt for connection.");
             if (mBluetoothGatt.connect()) {
                 mConnectionState = STATE_CONNECTING;
+                Log.d(TAG, "Succeeded in connecting.");
                 return true;
             } else {
+                Log.d(TAG, "Failed to connect.");
                 return false;
             }
         }
