@@ -230,16 +230,50 @@ public class DeviceControlActivity extends Activity {
         });
     }
 
+    private static long mPackageCount = -1;
+    private static int mLastPackageID = -1;
+    private static long mTotallyLostPackageCount = 0;
+    private static long mPreviousTime;
+
     private void displayData(byte[] data) {
         if (data == null) {
             return;
         }
 
         // Get a GForceData object from a legal data
-        GForceData gForceData = GForceData.build(data);
+        GForceData gForceData = new GForceData.Builder(data).build();
         if (gForceData == null) {
             return;
         }
+
+        // Calculate FPS
+        long time = System.currentTimeMillis();
+        if (mPackageCount == -1) {
+            mPackageCount = 1;
+            mPreviousTime = time;
+        }
+        else {
+            ++mPackageCount;
+            long timeElapsed = time - mPreviousTime;
+            if (timeElapsed >= 1000) {
+                Log.i(TAG, String.format("FPS: %d", mPackageCount * 1000 / timeElapsed));
+                mPreviousTime = time;
+                mPackageCount = 0;
+            }
+        }
+        // check the lost package
+        int package_id = gForceData.getPackageId();
+        if (gForceData.getPackageId() != GForceData.NO_PACKAGE_ID) {
+            if (mLastPackageID != -1) {
+                int lostPackageCount = package_id - mLastPackageID;
+                if (lostPackageCount > 1) {
+                    mTotallyLostPackageCount += lostPackageCount;
+                    Log.e(TAG, String.format("Lost packages: %d last second, totally %d ", lostPackageCount, mTotallyLostPackageCount));
+                }
+            }
+            mLastPackageID = package_id;
+        }
+
         // Display the data
         final StringBuilder stringBuilder = new StringBuilder();
         int type = gForceData.getType();
