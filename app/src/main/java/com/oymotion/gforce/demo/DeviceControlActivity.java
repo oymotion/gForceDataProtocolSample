@@ -262,8 +262,8 @@ public class DeviceControlActivity extends Activity {
             }
         }
         // check the lost package
-        int package_id = gForceData.getPackageId();
-        if (gForceData.getPackageId() != GForceData.NO_PACKAGE_ID) {
+        Byte package_id = gForceData.getPackageId();
+        if (package_id != null) {
             if (mLastPackageID != -1) {
                 int lostPackageCount = package_id - mLastPackageID;
                 if (lostPackageCount > 1) {

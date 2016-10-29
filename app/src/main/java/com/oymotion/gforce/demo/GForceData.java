@@ -42,27 +42,25 @@ public class GForceData {
         mGestureNames.put(GESTURE_UNKNOWN,  "GESTURE_UNKNOWN");
     }
 
-    public static final int NO_PACKAGE_ID = -1;
-
     private int mType;
-    private int mPackageId;             // 0-255, for check continuity of packages
+    private Byte mPackageId;             // 0-255, for check continuity of packages
     private float[] mQuaternionFloat;
     private int mGesture;
 
-    private GForceData(int type, float[] quaternion, int package_id) {
+    private GForceData(int type, float[] quaternion, Byte package_id) {
         mType = type;
         mQuaternionFloat = quaternion;
         mPackageId = package_id;
     }
 
-    private GForceData(int type, int gesture, int package_id) {
+    private GForceData(int type, int gesture, Byte package_id) {
         mType = type;
         mGesture = gesture;
         mPackageId = package_id;
     }
 
     public static class Builder {
-        byte[] mData;
+        private byte[] mData;
 
         public Builder(byte[] data) {
             mData = data;
@@ -77,7 +75,7 @@ public class GForceData {
             int type = (int)(mData[0] & 0x7F);
             int package_id_shift = (mData[0] & 0x80) == 0x80 ? 1 : 0;
             int length = mData[1];
-            int package_id = NO_PACKAGE_ID;
+            Byte package_id = null;
             if (package_id_shift == 1) {
                 package_id = mData[2];
             }
@@ -119,7 +117,7 @@ public class GForceData {
         return mType;
     }
 
-    public int getPackageId() {
+    public Byte getPackageId() {
         return mPackageId;
     }
 
