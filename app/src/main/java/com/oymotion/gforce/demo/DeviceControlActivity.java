@@ -235,6 +235,8 @@ public class DeviceControlActivity extends Activity {
     private static long mTotallyLostPackageCount = 0;
     private static long mPreviousTime;
 
+    //private static String mPreviousGestureName = null;
+
     private void displayData(byte[] data) {
         if (data == null) {
             return;
@@ -278,16 +280,25 @@ public class DeviceControlActivity extends Activity {
         final StringBuilder stringBuilder = new StringBuilder();
         int type = gForceData.getType();
         if (type == GForceData.QUATERNION_FLOAT) {
-            float[] q = gForceData.getQuaternionFloat();
+            Quaternion q = gForceData.getQuaternion();
 
-            for (int i = 0; i < 4; i++) {
-                stringBuilder.append(String.format("    q%d: %f\n", i, q[i]));
-            }
+            stringBuilder.append(String.format("    w: %f\n", q.w));
+            stringBuilder.append(String.format("    x: %f\n", q.x));
+            stringBuilder.append(String.format("    y: %f\n", q.y));
+            stringBuilder.append(String.format("    z: %f\n", q.z));
 
             mDataQuaternionFloat.setText(stringBuilder.toString());
         }
         else if (type == GForceData.GESTURE) {
-            stringBuilder.append(String.format("    %s", gForceData.getGestureName()));
+            String gestureName = gForceData.getGestureName();
+            if (gestureName == null) {
+                Log.e(TAG, String.format("Illegal gesture: %d", gForceData.getGesture()));
+            }
+            stringBuilder.append(String.format("    %s", gestureName));
+//            if (mPreviousGestureName != null) {
+//                stringBuilder.append(String.format("    %s (previous)\n", mPreviousGestureName));
+//            }
+//            mPreviousGestureName = gestureName;
             mDataGesture.setText(stringBuilder.toString());
         }
     }

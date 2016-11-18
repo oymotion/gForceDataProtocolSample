@@ -27,7 +27,7 @@ public class GForceData {
     public static final int GESTURE_TUCK_FINGERS           = 0x5;
     public static final int GESTURE_SHOOT                  = 0x6;
     public static final int GESTURE_MAX                    = GESTURE_SHOOT;
-    public static final int GESTURE_UNKNOWN                = 0xFF;
+    public static final int GESTURE_UNKNOWN                = -1;
 
     private static final SparseArray<String> mGestureNames = new SparseArray<>();
 
@@ -44,12 +44,12 @@ public class GForceData {
 
     private int mType;
     private Byte mPackageId;             // 0-255, for check continuity of packages
-    private float[] mQuaternionFloat;
+    private Quaternion mQuaternion;
     private int mGesture;
 
-    private GForceData(int type, float[] quaternion, Byte package_id) {
+    private GForceData(int type, Quaternion quaternion, Byte package_id) {
         mType = type;
-        mQuaternionFloat = quaternion;
+        mQuaternion = quaternion;
         mPackageId = package_id;
     }
 
@@ -93,13 +93,15 @@ public class GForceData {
                     q[i] = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getFloat();
                 }
 
-                return new GForceData(type, q, package_id);
+                Quaternion quat = new Quaternion(q[0], q[1], q[2], q[3]);
+
+                return new GForceData(type, quat, package_id);
             }
             else if (type == GESTURE) {
                 if (length != 1 + package_id_shift) {
                     return null;
                 }
-                int gesture = (int)mData[payload_start_index];
+                int gesture = (int)mDagta[payload_start_index];
                 if (gesture > GESTURE_MAX && gesture != GESTURE_UNKNOWN) {
                     Log.e(TAG, String.format("Illegal gesture value: %d", gesture));
                     return null;
@@ -121,8 +123,8 @@ public class GForceData {
         return mPackageId;
     }
 
-    public float[] getQuaternionFloat() {
-        return mQuaternionFloat;
+    public Quaternion getQuaternion() {
+        return mQuaternion;
     }
 
     public int getGesture() {
