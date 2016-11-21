@@ -101,7 +101,7 @@ public class GForceData {
                 if (length != 1 + package_id_shift) {
                     return null;
                 }
-                int gesture = (int)mDagta[payload_start_index];
+                int gesture = (int)mData[payload_start_index];
                 if (gesture > GESTURE_MAX && gesture != GESTURE_UNKNOWN) {
                     Log.e(TAG, String.format("Illegal gesture value: %d", gesture));
                     return null;

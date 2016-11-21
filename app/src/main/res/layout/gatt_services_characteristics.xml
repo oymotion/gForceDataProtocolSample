@@ -14,10 +14,11 @@
      limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="10dp"
+              android:weightSum="1">
     <LinearLayout android:orientation="horizontal"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
@@ -29,9 +30,10 @@
         <Space android:layout_width="5dp"
                android:layout_height="wrap_content"/>
         <TextView android:id="@+id/device_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"/>
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:textAppearance="@style/TextAppearance.AppCompat"
+                  android:textSize="14sp"/>
     </LinearLayout>
     <LinearLayout android:orientation="horizontal"
                   android:layout_width="match_parent"
@@ -47,39 +49,45 @@
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:text="@string/disconnected"
-                  android:textSize="18sp"/>
+                  android:textAppearance="@style/TextAppearance.AppCompat"
+                  android:textSize="14sp"/>
     </LinearLayout>
 
     <LinearLayout android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:baselineAligned="false">
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_margin="10dp"
+                  android:baselineAligned="false"
+                  android:layout_weight="0.21">
 
         <TextView android:id="@+id/data_gesture_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/gesture"
             android:textSize="18sp"/>
-        <Space android:layout_width="5dp"
-            android:layout_height="wrap_content"/>
+
         <TextView android:id="@+id/data_gesture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="18sp"/>
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:text=""
+                  android:textAppearance="@style/TextAppearance.AppCompat"
+                  android:textSize="14sp"
+                  android:lineSpacingExtra="8sp"/>
         <TextView android:id="@+id/data_quaternion_float_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/quaternion_float"
             android:textSize="18sp"/>
         <TextView android:id="@+id/data_quaternion_float"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="18sp"/>
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text=""
+                  android:textAppearance="@style/TextAppearance.AppCompat"
+                  android:textSize="14sp"
+                  android:textAlignment="textEnd"/>
     </LinearLayout>
-     <ExpandableListView android:id="@+id/gatt_services_list"
+
+    <ExpandableListView android:id="@+id/gatt_services_list"
             android:layout_width="match_parent"
             android:layout_height="243dp"/>
 </LinearLayout>
