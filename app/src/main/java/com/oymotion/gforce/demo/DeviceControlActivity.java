@@ -32,6 +32,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.movisens.smartgattlib.Characteristic;
 import com.movisens.smartgattlib.Service;
@@ -300,6 +301,12 @@ public class DeviceControlActivity extends Activity {
 //            }
 //            mPreviousGestureName = gestureName;
             mDataGesture.setText(stringBuilder.toString());
+        }
+        else if (type == GForceData.STATUS_UPDATE) {
+            int status = gForceData.getStatusUpdate();
+            if ((status & GForceData.STATUS_UPDATE_BASE_COORD_FRAME_SYNCHRONIZED) != 0) {
+                Toast.makeText(this, "The pose base coordicate frame was synchronized!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

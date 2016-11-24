@@ -17,6 +17,7 @@ public class GForceData {
     // Types of data
     public static final int QUATERNION_FLOAT      = 0x2;
     public static final int GESTURE               = 0xF;
+    public static final int STATUS_UPDATE         = 0x14;
 
     // Types of gesture data
     public static final int GESTURE_RELAX                  = 0x0;
@@ -42,10 +43,17 @@ public class GForceData {
         mGestureNames.put(GESTURE_UNKNOWN,  "GESTURE_UNKNOWN");
     }
 
+    // For Status update
+    // Pose base coordinate frame was synchronized, meaning that, the next
+    // quaternion [w, x, y, z] will be [1, 0, 0, 0]
+    public static final int STATUS_UPDATE_BASE_COORD_FRAME_SYNCHRONIZED = 1;
+
+    // internal data members
     private int mType;
     private Byte mPackageId;             // 0-255, for check continuity of packages
     private Quaternion mQuaternion;
     private int mGesture;
+    private int mStatus;
 
     private GForceData(int type, Quaternion quaternion, Byte package_id) {
         mType = type;
@@ -53,9 +61,15 @@ public class GForceData {
         mPackageId = package_id;
     }
 
-    private GForceData(int type, int gesture, Byte package_id) {
+    private GForceData(int type, int i, Byte package_id) {
         mType = type;
-        mGesture = gesture;
+        if (type == GESTURE) {
+            mGesture = i;
+        }
+        else if (type == STATUS_UPDATE) {
+            mStatus = i;
+        }
+
         mPackageId = package_id;
     }
 
@@ -110,6 +124,13 @@ public class GForceData {
                     return new GForceData(type, gesture, package_id);
                 }
             }
+            else if (type == STATUS_UPDATE) {
+                if (length != 1 + package_id_shift) {
+                    return null;
+                }
+                int status = (int)mData[payload_start_index];
+                return new GForceData(type, status, package_id);
+            }
 
             return null;
         }
@@ -137,6 +158,10 @@ public class GForceData {
 
     public static String getGestureName(int gesture){
         return mGestureNames.get(gesture);
+    }
+
+    public int getStatusUpdate() {
+        return mStatus;
     }
 
 }
