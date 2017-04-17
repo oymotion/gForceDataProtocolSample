@@ -4,7 +4,7 @@
 This source code is to illustrate how to get the data of gForce armband in
 an Android phone through the Android GATT service.
 
-The supported version of gForce armband data protocol is v1.0. Please also
+The supported version of gForce armband data protocol is v2.0. Please also
 refer to the document of `gForce Data Protocol`.
 
 **Note**:
