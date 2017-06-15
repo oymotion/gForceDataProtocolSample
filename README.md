@@ -17,9 +17,9 @@ a gForce armband through Android GATT service.
 > for such information.
 
 ## Build and run
-1. Open this project in Android Studio, and then build, install and run the demo
-on your phone with supported Android version.
+1. Open this project in Android Studio, and then build, install and run it
+on a phone with supported Android versions.
 
-2. Scan and select the gForce armband to connect. As long as the connection
-   succeeds, you will be able to see the data (e.g. quaterions and gestures)
-   displayed.
+2. Scan and select the gForce armband to connect. Once the connection succeeds,
+   you will be able to see the data (e.g. quaterions and gestures)
+   get displayed.
