@@ -2,7 +2,7 @@
 
 ## Brief
 This source code is intended to illustrate how an Android phone interacts 
-a gForce armband through Android GATT service.
+with a gForce armband through Android GATT service.
 
 
 
