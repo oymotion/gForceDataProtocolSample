@@ -21,7 +21,7 @@ public class GForceData {
 
     // Types of gesture data
     public static final int GESTURE_RELAX                  = 0x0;
-    public static final int GESTURE_GIST                   = 0x1;
+    public static final int GESTURE_FIST                   = 0x1;
     public static final int GESTURE_SPREAD_FINGERS         = 0x2;
     public static final int GESTURE_WAVE_TOWARD_PALM       = 0x3;
     public static final int GESTURE_WAVE_BACKWARD_PALM     = 0x4;
