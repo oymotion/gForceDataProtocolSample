@@ -1,8 +1,9 @@
 # Sample Code of gForce Data Protocol
 
 ## Brief
-This source code is to illustrate how Android device interacts with 
-[gForce Armband][gForceArmBand] via the Android GATT service.
+This source code is to illustrate how an Android device interacts with 
+a [gForce Armband][gForceArmBand] via [gForce Data Protocol][gForceDataProtocol]
+based on the Android GATT service.
 
 
 
@@ -29,4 +30,5 @@ on your phone with supported Android version.
    succeeds, you will be able to see the data (e.g. quaterions and gestures)
    displayed.
 
-[gForceArmBand]: https://oymotion.github.io/gForce100UserGuide/
+[gForceArmBand]: https://oymotion.github.io/doc/gForce100UserGuide/
+[gForceDataProtocol]: https://oymotion.github.io/doc/gForceDataProtocol/
