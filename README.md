@@ -1,6 +1,6 @@
 # Sample Code of gForce Data Protocol
 
-## Brief
+## Overview
 This source code is intended to illustrate how an Android device interacts 
 with a [gForce Armband][gForceArmBand] via the 
 [gForce Data Protocol][gForceDataProtocol] based on the Android GATT service.
