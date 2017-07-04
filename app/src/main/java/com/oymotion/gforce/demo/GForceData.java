@@ -34,7 +34,7 @@ public class GForceData {
 
     static {
         mGestureNames.put(GESTURE_RELAX, "GESTURE_RELAX");
-        mGestureNames.put(GESTURE_GIST, "GESTURE_GIST");
+        mGestureNames.put(GESTURE_FIST, "GESTURE_FIST");
         mGestureNames.put(GESTURE_SPREAD_FINGERS, "GESTURE_SPREAD_FINGERS");
         mGestureNames.put(GESTURE_WAVE_TOWARD_PALM, "GESTURE_WAVE_TOWARD_PALM");
         mGestureNames.put(GESTURE_WAVE_BACKWARD_PALM,  "GESTURE_WAVE_BACKWARD_PALM");
